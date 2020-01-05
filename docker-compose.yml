@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  web:
+    image: abiosoft/caddy:php
+    ports:
+      - "8080:80"
+      - "8181:443"
+      - "2015:2015"
+    volumes:
+      - type: bind
+        source: .
+        target: /srv
+
+      - type: bind
+        source: ./Caddyfile
+        target: /etc/Caddyfile
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: passwordROFL
+    volumes:
+    - mysql:/var/lib/mysql
+
+volumes:
+  mysql:
